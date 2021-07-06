@@ -26,8 +26,19 @@ pipeline {
     }
 
     stage('Deploy') {
-      steps {
-        echo 'Deploying app on AWS'
+      parallel {
+        stage('Deploy') {
+          steps {
+            echo 'Deploying app on AWS'
+          }
+        }
+
+        stage('Artifacts') {
+          steps {
+            archiveArtifacts 'testlog.txt'
+          }
+        }
+
       }
     }
 
